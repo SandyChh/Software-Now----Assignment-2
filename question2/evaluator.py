@@ -184,6 +184,25 @@ def tree_to_string(tree):
     op, left, right = tree
     return f"({op} {tree_to_string(left)} {tree_to_string(right)})"
 
+
+# ---------------- TOKEN DISPLAY FORMAT ---------------- #
+
+def tokens_to_string(tokens):
+
+    if tokens == "ERROR":
+        return "ERROR"
+
+    result = []
+
+    # convert each token to string format
+    for t in tokens:
+
+        if t[0] == "END":
+            result.append("[END]")  # Mark end token
+        else:
+            result.append(f"[{t[0]}:{t[1]}]")
+
+    return " ".join(result)
 # ---------------- MAIN DRIVER FUNCTION ---------------- #
 
 def evaluate_file(input_path: str) -> list[dict]:
