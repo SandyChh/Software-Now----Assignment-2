@@ -203,16 +203,24 @@ def tokens_to_string(tokens):
             result.append(f"[{t[0]}:{t[1]}]")
 
     return " ".join(result)
+
 # ---------------- MAIN DRIVER FUNCTION ---------------- #
 
 def evaluate_file(input_path: str) -> list[dict]:
+    
+    # Reads expressions from a file, evaluates them, writes output.txt,
+    # and returns a list of dictionaries with keys: input, tree, tokens, result.
+    results: list[dict] = []       # store return results
+    output_lines: list[str] = []   # store file output
+# def evaluate_file(input_path: str):
+
+#     results = []  # store return results
+#     output_lines = []  # store file output
+
     # read input file
     with open(input_path, "r") as file:
         lines = file.readlines()
 
-    tokens = []
-    output_lines = []  # store lines that will be written to output.txt
-    
     # process each expression line
     for line in lines:
 
@@ -223,19 +231,60 @@ def evaluate_file(input_path: str) -> list[dict]:
 
         try:
             # STEP 1: TOKENIZE
-            token = tokenize(expr)
-            if token == "ERROR":
-                raise Exception()
-            tokens.append(token)
-        except Exception:
-          # instead of printing error to console, store it for file output
-            output_lines.append(expr)  
-    output_lines.append(str(tokens))
+            tokens = tokenize(expr)
 
-    # write all collected output lines into output.txt
-    with open("output.txt", "w") as f:
-        f.write("\n".join(output_lines))    
-    return []  # placeholder for results
+            if tokens == "ERROR":
+                raise Exception()
+
+            # STEP 2: PARSE (build tree)
+            tree, pos = parse_expression(tokens, 0)
+
+            # ensure full expression consumed (check for leftover tokens)
+            if tokens[pos][0] != "END":
+                raise Exception("Extra tokens")
+
+            # STEP 3: convert to display format
+            tree_str = tree_to_string(tree)
+            tokens_str = tokens_to_string(tokens)
+
+            # STEP 4: evaluate expression
+            try:
+                value = evaluate(tree)
+
+                # formatting rule: remove .0 if integer
+                if isinstance(value, float) and value.is_integer():
+                    value = int(value)
+                else:
+                    value = round(value, 4)
+
+            except:
+                value = "ERROR"
+
+        except:
+            tree_str = "ERROR"
+            tokens_str = "ERROR"
+            value = "ERROR"
+
+        # store result in return structure
+        results.append({
+            "input": expr,
+            "tree": tree_str,
+            "tokens": tokens_str,
+            "result": value
+        })
+
+        # write formatted output block
+        output_lines.append(f"Input: {expr}")
+        output_lines.append(f"Tree: {tree_str}")
+        output_lines.append(f"Tokens: {tokens_str}")
+        output_lines.append(f"Result: {value}")
+        output_lines.append("")
+
+    # write output file
+    with open("output.txt", "w") as file:
+        file.write("\n".join(output_lines))
+
+    return results
 
 
 def main():
