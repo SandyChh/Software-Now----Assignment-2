@@ -70,6 +70,29 @@ def tokenize(expression):
 
     return tokens
 
+
+# ---------------- PARSER FUNCTIONS (GRAMMAR ENGINE) ---------------- #
+
+# Expression parser: Handles + and - (lowest precedence level)
+def parse_expression(tokens, pos):
+
+    # first parse the left-hand side (higher precedence: * /) terms
+    left, pos = parse_term(tokens, pos)
+
+    # keep processing Loop while next token is + and - operators (can chain multiple additions/subtractions)
+    while tokens[pos][0] == "OP" and tokens[pos][1] in "+-":
+
+        op = tokens[pos][1]  # operator
+        pos += 1  # move forward
+
+        right, pos = parse_term(tokens, pos)  # parse right-hand term
+
+        # build syntax tree node
+        left = (op, left, right)
+
+    return left, pos
+
+
 def evaluate_file(input_path: str) -> list[dict]:
     # read input file
     with open(input_path, "r") as file:
