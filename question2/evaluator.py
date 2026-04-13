@@ -168,6 +168,24 @@ def parse_factor(tokens, pos):
         raise Exception("Invalid syntax")
 
 
+# ---------------- TREE TO STRING (DISPLAY FORMAT) ---------------- #
+
+def tree_to_string(tree):
+
+    # number formatting
+    if isinstance(tree, (int, float)):
+        return str(tree)
+
+    # unary format
+    if tree[0] == "neg":
+        return f"(neg {tree_to_string(tree[1])})"
+
+    # binary operation format
+    op, left, right = tree
+    return f"({op} {tree_to_string(left)} {tree_to_string(right)})"
+
+# ---------------- MAIN DRIVER FUNCTION ---------------- #
+
 def evaluate_file(input_path: str) -> list[dict]:
     # read input file
     with open(input_path, "r") as file:
