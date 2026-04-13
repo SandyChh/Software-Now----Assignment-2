@@ -1,0 +1,37 @@
+# Assessment 2 - Group Submission
+
+Welcome! This repository contains our group submission for **Assessment 2**.
+
+## Overview
+
+This assignment contains two main tasks:
+
+1. **Text Encryption/Decryption Program**  
+   - Reads `raw_text.txt`  
+   - Encrypts the contents using a custom shift-based method  
+   - Decrypts the encrypted text  
+   - Verifies that decryption matches the original text  
+
+2. **Mathematical Expression Evaluator**  
+   - Reads expressions from a text file  
+   - Parses and evaluates using **recursive descent parsing**  
+   - Handles +, -, *, /, parentheses, unary negation, and implicit multiplication  
+   - Produces `output.txt` with input, parse tree, tokens, and result for each expression  
+
+## Repository Contents
+
+- `assignment2.zip` – All files for this assignment  
+- `raw_text.txt` – Sample input for the encryption/decryption program  
+- `sample_input.txt` – Sample input for the expression evaluator  
+- `output.txt` – Generated output from evaluating expressions  
+- `q2_evaluator.py` – Expression evaluator program  
+- `README.md` – This file  
+ 
+
+## Notes
+
+- This repository has been created and pushed to GitHub.  
+- All group members have been added as collaborators.  
+- The repository is **public**, and all contributions and answers can be tracked here: [GitHub Repository](https://github.com/SandyChh/Software-Now----Assignment-2.git)
+
+Thank you for reviewing our submission!
