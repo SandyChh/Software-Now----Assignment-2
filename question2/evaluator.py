@@ -92,6 +92,38 @@ def parse_expression(tokens, pos):
 
     return left, pos
 
+# Term parser: Handles * and / (and implicit multiplication )
+def parse_term(tokens, pos):
+
+    # parse left-hand factor first
+    left, pos = parse_factor(tokens, pos)
+
+    while True:
+
+        token = tokens[pos]
+
+        # ---------------- NORMAL MULTIPLICATION/DIVISION ---------------- #
+        if token[0] == "OP" and token[1] in "*/":
+
+            op = token[1]
+            pos += 1
+
+            right, pos = parse_factor(tokens, pos)
+
+            left = (op, left, right) # Build binary tree node
+
+        # ---------------- IMPLICIT MULTIPLICATION ---------------- #
+        # e.g. 2(3), (2)(3), 2 3 (adjacent expressions)
+        elif token[0] in ("NUM", "LPAREN"):
+
+            right, pos = parse_factor(tokens, pos)
+
+            left = ("*", left, right) # Treat as multiplication
+
+        else:
+            break  # stop when no valid multiplication pattern
+
+    return left, pos
 
 def evaluate_file(input_path: str) -> list[dict]:
     # read input file
