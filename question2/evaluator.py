@@ -76,7 +76,8 @@ def evaluate_file(input_path: str) -> list[dict]:
         lines = file.readlines()
 
     tokens = []
-
+    output_lines = []  # store lines that will be written to output.txt
+    
     # process each expression line
     for line in lines:
 
@@ -92,12 +93,19 @@ def evaluate_file(input_path: str) -> list[dict]:
                 raise Exception()
             tokens.append(token)
         except Exception:
-            print(expr)  # tokenization failed
-    print(tokens)
-    return []  # placeholder for results (not implemented)
+          # instead of printing error to console, store it for file output
+            output_lines.append(expr)  
+    output_lines.append(str(tokens))
+
+    # write all collected output lines into output.txt
+    with open("output.txt", "w") as f:
+        f.write("\n".join(output_lines))    
+    return []  # placeholder for results
+
 
 def main():
     evaluate_file("input.txt")
+    print(" SUCCESS: Output written to output.txt successfully!")
 
 if __name__ == "__main__":
     main()
