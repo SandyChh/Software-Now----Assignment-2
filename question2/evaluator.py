@@ -125,6 +125,49 @@ def parse_term(tokens, pos):
 
     return left, pos
 
+
+# Factor parser: Handles numbers, parentheses, unary minus
+def parse_factor(tokens, pos):
+
+    token = tokens[pos]
+
+    # ---------------- UNARY NEGATION (MINUS) ---------------- #
+    # converts -x into (neg x)
+    if token[0] == "OP" and token[1] == "-":
+
+        pos += 1
+        operand, pos = parse_factor(tokens, pos)
+
+        return ("neg", operand), pos # Return unary negation node
+
+    # ---------------- NUMBER ---------------- #
+    elif token[0] == "NUM":
+
+        pos += 1
+
+        # Return float if decimal, else int
+        return float(token[1]) if "." in token[1] else int(token[1]), pos
+
+    # ---------------- PARENTHESES ---------------- #
+    elif token[0] == "LPAREN":
+
+        pos += 1  # skip "("
+
+        expr, pos = parse_expression(tokens, pos) # Parse inside parentheses
+
+        # ensure closing parenthesis exists
+        if tokens[pos][0] != "RPAREN":
+            raise Exception("Missing )")
+
+        pos += 1  # skip ")"
+
+        return expr, pos
+
+    # ---------------- INVALID SYNTAX ---------------- #
+    else:
+        raise Exception("Invalid syntax")
+
+
 def evaluate_file(input_path: str) -> list[dict]:
     # read input file
     with open(input_path, "r") as file:
