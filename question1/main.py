@@ -13,7 +13,7 @@ def transform(text, mapping):   # Transforms the text using the provided mapping
     return ''.join(map(lambda x: mapping[x] if x in mapping else x, text))
 
 def encrypt(ip, op, shift1, shift2):    # Reads input file, generates ciphers, encrpyts the data using the ciphers, and writes the encrypted data to the output file.
-    data = get_file_data(ip)
+    data = get_file_data(ip)    # Getting data to encrypt from input file path
 
     # Generating ciphers for differenct character ranges based on the provided shift values.
     a_m_cipher = gen_cipher('a', 'm', shift1 * shift2)
@@ -30,14 +30,9 @@ def encrypt(ip, op, shift1, shift2):    # Reads input file, generates ciphers, e
     return cipher   # Returning the cipher used for decryption purposed later on
 
 def get_input():    # Prompts the user to enter two shift values and validates the input to ensure they are integers.
-    shifts = []
-    while len(shifts) < 2:
-        try:
-            shift = int(input(f'Enter shift {len(shifts)+1}: '))
-            shifts.append(shift)
-        except ValueError:
-            print('Invalid input. Please enter an integer value.')
-    return shifts[0], shifts[1]
+    shift1 = int(input('Enter shift 1: '))  # Getting shift 1 value from user
+    shift2 = int(input('Enter shift 2: '))  # Getting shift 2 value from user
+    return shift1, shift2
 
 def main():
     shift1, shift2 = get_input()
