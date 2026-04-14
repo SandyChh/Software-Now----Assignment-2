@@ -66,14 +66,13 @@ def get_input():    # Prompts the user to enter two shift values and validates t
 
 def main():
     shift1, shift2 = get_input()
-    try:    # Attempt to encrypt the text using the provided shift values and handle any exceptions that may occur during the process.
-        cipher = encrypt('raw_text.txt', 'encrypted_text.txt', shift1, shift2)
+    try:    # Handle any exceptions that may occur.
+        cipher = encrypt('raw_text.txt', 'encrypted_text.txt', shift1, shift2)    # Encrypt the text using the provided shift values.
+        decrypt('encrypted_text.txt', 'decrypted_text.txt', cipher)    # Decrypt the text using the provided cipher.
+        verify('raw_text.txt', 'decrypted_text.txt')    # Verify the decrypted text matches the original text.
     except Exception as e:
-        print(f'An error occurred: {e}')
+        print(f'An error occurred: {e}')    # Print the error message if an exception occurs.
         return
-    print(cipher)
-    decrypt('encrypted_text.txt', 'decrypted_text.txt', cipher)
-    verify('raw_text.txt', 'decrypted_text.txt')
 
 
 if __name__ == '__main__':
