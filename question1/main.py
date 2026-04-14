@@ -38,17 +38,20 @@ def encrypt(ip, op, shift1, shift2):
     return cipher   # Returning the cipher used for decryption purposed later on
 
 
+# Reads encrypted file, reverses the cipher mapping, decrypts the data, and writes the decrypted data to the output file.
 def decrypt(ip, op, cipher):
-    data = get_file_data(ip)
+    data = get_file_data(ip)    # Getting encrypted data from input file path
+    # Reversing the cipher to restore original character mappings
     rev_cipher = {v: k for k, v in cipher.items()}
     decrypted_data = transform(data, rev_cipher)
     with open(op, 'w') as file:
         file.write(decrypted_data)
 
 
+# Reads two files and checks whether their contents match to verify decryption was successful.
 def verify(path1, path2):
-    file1 = get_file_data(path1)
-    file2 = get_file_data(path2)
+    file1 = get_file_data(path1)    # Getting data from the original file
+    file2 = get_file_data(path2)    # Getting data from the decrypted file
     if file1 == file2:
         print('The decryption is successful.')
     else:
@@ -69,6 +72,8 @@ def main():
         print(f'An error occurred: {e}')
         return
     print(cipher)
+    decrypt('encrypted_text.txt', 'decrypted_text.txt', cipher)
+    verify('raw_text.txt', 'decrypted_text.txt')
 
 
 if __name__ == '__main__':
