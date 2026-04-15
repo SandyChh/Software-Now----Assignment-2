@@ -59,9 +59,14 @@ def verify(path1, path2):
 
 
 def get_input():    # Prompts the user to enter two shift values and validates the input to ensure they are integers.
-    shift1 = int(input('Enter shift 1: '))  # Getting shift 1 value from user
-    shift2 = int(input('Enter shift 2: '))  # Getting shift 2 value from user
-    return shift1, shift2
+    shifts = []
+    while len(shifts) < 2:  # Loop until two shift values are entered
+        try:
+            shift = int(input(f'Enter shift {len(shifts)+1}: '))
+            shifts.append(shift)
+        except ValueError:
+            print('Invalid input. Please enter an integer value.')
+    return shifts[0], shifts[1]
 
 
 def main():
