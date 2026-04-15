@@ -167,6 +167,38 @@ def parse_factor(tokens, pos):
     else:
         raise Exception("Invalid syntax")
 
+def evaluate(tree):
+
+    # if value is a number, return directly
+    if isinstance(tree, (int, float)):
+        return tree
+
+    # unary negation case
+    if tree[0] == "neg":
+        return -evaluate(tree[1])
+
+    op, left, right = tree # Binary operation
+
+    # perform arithmetic operations
+    if op == "+":
+        return evaluate(left) + evaluate(right)
+
+    elif op == "-":
+        return evaluate(left) - evaluate(right)
+
+    elif op == "*":
+        return evaluate(left) * evaluate(right)
+
+    elif op == "/":
+
+        divisor = evaluate(right)
+
+        # runtime error check (Division by zero check)
+        if divisor == 0:
+            raise ZeroDivisionError
+
+        return evaluate(left) / divisor
+
 
 # ---------------- TREE TO STRING (DISPLAY FORMAT) ---------------- #
 
@@ -283,13 +315,14 @@ def evaluate_file(input_path: str) -> list[dict]:
     # write output file
     with open("output.txt", "w") as file:
         file.write("\n".join(output_lines))
+    
+    print(" SUCCESS: Output written to output.txt successfully!")
 
     return results
 
 
 def main():
     evaluate_file("input.txt")
-    print(" SUCCESS: Output written to output.txt successfully!")
 
 if __name__ == "__main__":
     main()
