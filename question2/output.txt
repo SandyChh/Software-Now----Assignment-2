@@ -32,3 +32,8 @@ Input: 1 / 0
 Tree: (/ 1 0)
 Tokens: [NUM:1] [OP:/] [NUM:0] [END]
 Result: ERROR
+
+Input: 5 ++ 5
+Tree: ERROR
+Tokens: [NUM:5] [OP:+] [OP:+] [NUM:5] [END]
+Result: ERROR

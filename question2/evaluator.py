@@ -268,28 +268,33 @@ def evaluate_file(input_path: str) -> list[dict]:
             if tokens == "ERROR":
                 raise Exception()
 
-            # STEP 2: PARSE (build tree)
-            tree, pos = parse_expression(tokens, 0)
-
-            # ensure full expression consumed (check for leftover tokens)
-            if tokens[pos][0] != "END":
-                raise Exception("Extra tokens")
-
-            # STEP 3: convert to display format
-            tree_str = tree_to_string(tree)
             tokens_str = tokens_to_string(tokens)
 
-            # STEP 4: evaluate expression
+            # STEP 2: PARSE (build tree)
             try:
-                value = evaluate(tree)
+                tree, pos = parse_expression(tokens, 0)
 
-                # formatting rule: remove .0 if integer
-                if isinstance(value, float) and value.is_integer():
-                    value = int(value)
-                else:
-                    value = round(value, 4)
+                # ensure full expression consumed (check for leftover tokens)
+                if tokens[pos][0] != "END":
+                    raise Exception("Extra tokens")
 
+                # STEP 3: convert to display format
+                tree_str = tree_to_string(tree)
+
+                # STEP 4: evaluate expression
+                try:
+                    value = evaluate(tree)
+
+                    # formatting rule: remove .0 if integer
+                    if isinstance(value, float) and value.is_integer():
+                        value = int(value)
+                    else:
+                        value = round(value, 4)
+
+                except:
+                    value = "ERROR"
             except:
+                tree_str = "ERROR"
                 value = "ERROR"
 
         except:
@@ -322,7 +327,10 @@ def evaluate_file(input_path: str) -> list[dict]:
 
 
 def main():
-    evaluate_file("input.txt")
+    try:
+        evaluate_file("input.txt")
+    except Exception as e:
+        print(f'Error occurred: {e}')
 
 if __name__ == "__main__":
     main()
