@@ -317,13 +317,16 @@ def evaluate_file(input_path: str) -> list[dict]:
     with open("output.txt", "w") as file:
         file.write("\n".join(output_lines))
     
+    print("====================================================")
+    print(" SUCCESS: Output written to output.txt successfully!")
+    print("====================================================")
+    
     return results
 
 
 def main():
     try:
         evaluate_file("input.txt")
-        print(" SUCCESS: Output written to output.txt successfully!")
 
     except Exception as e:
         print(f'Error occurred: {e}')
