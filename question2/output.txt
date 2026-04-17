@@ -18,10 +18,10 @@ Tree: (neg (neg 5))
 Tokens: [OP:-] [OP:-] [NUM:5] [END]
 Result: 5
 
-Input: (10 - 2) * (3 + -4) / 2
-Tree: (/ (* (- 10 2) (+ 3 (neg 4))) 2)
-Tokens: [LPAREN:(] [NUM:10] [OP:-] [NUM:2] [RPAREN:)] [OP:*] [LPAREN:(] [NUM:3] [OP:+] [OP:-] [NUM:4] [RPAREN:)] [OP:/] [NUM:2] [END]
-Result: -4
+Input: (10 - 2) * 3 + -4 / 2
+Tree: (+ (* (- 10 2) 3) (/ (neg 4) 2))
+Tokens: [LPAREN:(] [NUM:10] [OP:-] [NUM:2] [RPAREN:)] [OP:*] [NUM:3] [OP:+] [OP:-] [NUM:4] [OP:/] [NUM:2] [END]
+Result: 22
 
 Input: 3 @ 5
 Tree: ERROR
@@ -33,7 +33,317 @@ Tree: (/ 1 0)
 Tokens: [NUM:1] [OP:/] [NUM:0] [END]
 Result: ERROR
 
-Input: 5 ++ 5
+Input: -------------
 Tree: ERROR
-Tokens: [NUM:5] [OP:+] [OP:+] [NUM:5] [END]
+Tokens: [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [OP:-] [END]
 Result: ERROR
+
+Input: ++5
+Tree: ERROR
+Tokens: [OP:+] [OP:+] [NUM:5] [END]
+Result: ERROR
+
+Input: 1.5 + 2.5
+Tree: (+ 1.5 2.5)
+Tokens: [NUM:1.5] [OP:+] [NUM:2.5] [END]
+Result: 4
+
+Input: 2.5 + 3
+Tree: (+ 2.5 3)
+Tokens: [NUM:2.5] [OP:+] [NUM:3] [END]
+Result: 5.5
+
+Input: .5
+Tree: 0.5
+Tokens: [NUM:.5] [END]
+Result: 0.5
+
+Input: 0.5
+Tree: 0.5
+Tokens: [NUM:0.5] [END]
+Result: 0.5
+
+Input: 0.2.2
+Tree: ERROR
+Tokens: ERROR
+Result: ERROR
+
+Input: sdfgh
+Tree: ERROR
+Tokens: ERROR
+Result: ERROR
+
+Input: (2)(3)
+Tree: (* 2 3)
+Tokens: [LPAREN:(] [NUM:2] [RPAREN:)] [LPAREN:(] [NUM:3] [RPAREN:)] [END]
+Result: 6
+
+Input: +5
+Tree: ERROR
+Tokens: [OP:+] [NUM:5] [END]
+Result: ERROR
+
+Input: 0.1 + 0.2
+Tree: (+ 0.1 0.2)
+Tokens: [NUM:0.1] [OP:+] [NUM:0.2] [END]
+Result: 0.3
+
+Input: (/ 1 0)
+Tree: ERROR
+Tokens: [LPAREN:(] [OP:/] [NUM:1] [NUM:0] [RPAREN:)] [END]
+Result: ERROR
+
+Input: 2(3+4)
+Tree: (* 2 (+ 3 4))
+Tokens: [NUM:2] [LPAREN:(] [NUM:3] [OP:+] [NUM:4] [RPAREN:)] [END]
+Result: 14
+
+Input: (2)(3)
+Tree: (* 2 3)
+Tokens: [LPAREN:(] [NUM:2] [RPAREN:)] [LPAREN:(] [NUM:3] [RPAREN:)] [END]
+Result: 6
+
+Input: 3 * -2
+Tree: (* 3 (neg 2))
+Tokens: [NUM:3] [OP:*] [OP:-] [NUM:2] [END]
+Result: -6
+
+Input: -(3+4)
+Tree: (neg (+ 3 4))
+Tokens: [OP:-] [LPAREN:(] [NUM:3] [OP:+] [NUM:4] [RPAREN:)] [END]
+Result: -7
+
+Input: 3.5 + 2.5
+Tree: (+ 3.5 2.5)
+Tokens: [NUM:3.5] [OP:+] [NUM:2.5] [END]
+Result: 6
+
+Input: 4 * / 2
+Tree: ERROR
+Tokens: [NUM:4] [OP:*] [OP:/] [NUM:2] [END]
+Result: ERROR
+
+Input: 2(3)(4)
+Tree: (* (* 2 3) 4)
+Tokens: [NUM:2] [LPAREN:(] [NUM:3] [RPAREN:)] [LPAREN:(] [NUM:4] [RPAREN:)] [END]
+Result: 24
+
+Input: (2)(-3)
+Tree: (* 2 (neg 3))
+Tokens: [LPAREN:(] [NUM:2] [RPAREN:)] [LPAREN:(] [OP:-] [NUM:3] [RPAREN:)] [END]
+Result: -6
+
+Input: 3 - (2)(4)
+Tree: (- 3 (* 2 4))
+Tokens: [NUM:3] [OP:-] [LPAREN:(] [NUM:2] [RPAREN:)] [LPAREN:(] [NUM:4] [RPAREN:)] [END]
+Result: -5
+
+Input: 3 + * 5
+Tree: ERROR
+Tokens: [NUM:3] [OP:+] [OP:*] [NUM:5] [END]
+Result: ERROR
+
+Input: 4 *
+Tree: ERROR
+Tokens: [NUM:4] [OP:*] [END]
+Result: ERROR
+
+Input: (1+2)(3+4)
+Tree: (* (+ 1 2) (+ 3 4))
+Tokens: [LPAREN:(] [NUM:1] [OP:+] [NUM:2] [RPAREN:)] [LPAREN:(] [NUM:3] [OP:+] [NUM:4] [RPAREN:)] [END]
+Result: 21
+
+Input: 10 / (2 - 2)
+Tree: (/ 10 (- 2 2))
+Tokens: [NUM:10] [OP:/] [LPAREN:(] [NUM:2] [OP:-] [NUM:2] [RPAREN:)] [END]
+Result: ERROR
+
+Input: +7
+Tree: ERROR
+Tokens: [OP:+] [NUM:7] [END]
+Result: ERROR
+
+Input: 3.5 * 2
+Tree: (* 3.5 2)
+Tokens: [NUM:3.5] [OP:*] [NUM:2] [END]
+Result: 7
+
+Input: (3+4
+Tree: ERROR
+Tokens: [LPAREN:(] [NUM:3] [OP:+] [NUM:4] [END]
+Result: ERROR
+
+Input: 11
+Tree: 11
+Tokens: [NUM:11] [END]
+Result: 11
+
+Input: 1 1
+Tree: (* 1 1)
+Tokens: [NUM:1] [NUM:1] [END]
+Result: 1
+
+Input: 4 * 5 + 6
+Tree: (+ (* 4 5) 6)
+Tokens: [NUM:4] [OP:*] [NUM:5] [OP:+] [NUM:6] [END]
+Result: 26
+
+Input: 7 + (8 * 2)
+Tree: (+ 7 (* 8 2))
+Tokens: [NUM:7] [OP:+] [LPAREN:(] [NUM:8] [OP:*] [NUM:2] [RPAREN:)] [END]
+Result: 23
+
+Input: (1 + 2) * (3 + 4)
+Tree: (* (+ 1 2) (+ 3 4))
+Tokens: [LPAREN:(] [NUM:1] [OP:+] [NUM:2] [RPAREN:)] [OP:*] [LPAREN:(] [NUM:3] [OP:+] [NUM:4] [RPAREN:)] [END]
+Result: 21
+
+Input: -10 + 5
+Tree: (+ (neg 10) 5)
+Tokens: [OP:-] [NUM:10] [OP:+] [NUM:5] [END]
+Result: -5
+
+Input: -(2 * 3)
+Tree: (neg (* 2 3))
+Tokens: [OP:-] [LPAREN:(] [NUM:2] [OP:*] [NUM:3] [RPAREN:)] [END]
+Result: -6
+
+Input: --8
+Tree: (neg (neg 8))
+Tokens: [OP:-] [OP:-] [NUM:8] [END]
+Result: 8
+
+Input: ---5
+Tree: (neg (neg (neg 5)))
+Tokens: [OP:-] [OP:-] [OP:-] [NUM:5] [END]
+Result: -5
+
+Input: (6 + 2) / 4
+Tree: (/ (+ 6 2) 4)
+Tokens: [LPAREN:(] [NUM:6] [OP:+] [NUM:2] [RPAREN:)] [OP:/] [NUM:4] [END]
+Result: 2
+
+Input: 9 / 3 + 2 * 5
+Tree: (+ (/ 9 3) (* 2 5))
+Tokens: [NUM:9] [OP:/] [NUM:3] [OP:+] [NUM:2] [OP:*] [NUM:5] [END]
+Result: 13
+
+Input: (3 + (2 * (1 + 1)))
+Tree: (+ 3 (* 2 (+ 1 1)))
+Tokens: [LPAREN:(] [NUM:3] [OP:+] [LPAREN:(] [NUM:2] [OP:*] [LPAREN:(] [NUM:1] [OP:+] [NUM:1] [RPAREN:)] [RPAREN:)] [RPAREN:)] [END]
+Result: 7
+
+Input: 2(3 + 4)
+Tree: (* 2 (+ 3 4))
+Tokens: [NUM:2] [LPAREN:(] [NUM:3] [OP:+] [NUM:4] [RPAREN:)] [END]
+Result: 14
+
+Input: (2 + 3)(4 + 5)
+Tree: (* (+ 2 3) (+ 4 5))
+Tokens: [LPAREN:(] [NUM:2] [OP:+] [NUM:3] [RPAREN:)] [LPAREN:(] [NUM:4] [OP:+] [NUM:5] [RPAREN:)] [END]
+Result: 45
+
+Input: (1 + 2)(3)(4)
+Tree: (* (* (+ 1 2) 3) 4)
+Tokens: [LPAREN:(] [NUM:1] [OP:+] [NUM:2] [RPAREN:)] [LPAREN:(] [NUM:3] [RPAREN:)] [LPAREN:(] [NUM:4] [RPAREN:)] [END]
+Result: 36
+
+Input: 5(6)
+Tree: (* 5 6)
+Tokens: [NUM:5] [LPAREN:(] [NUM:6] [RPAREN:)] [END]
+Result: 30
+
+Input: (7)(8 + 2)
+Tree: (* 7 (+ 8 2))
+Tokens: [LPAREN:(] [NUM:7] [RPAREN:)] [LPAREN:(] [NUM:8] [OP:+] [NUM:2] [RPAREN:)] [END]
+Result: 70
+
+Input: -(-5)
+Tree: (neg (neg 5))
+Tokens: [OP:-] [LPAREN:(] [OP:-] [NUM:5] [RPAREN:)] [END]
+Result: 5
+
+Input: -(3 + (2 * -4))
+Tree: (neg (+ 3 (* 2 (neg 4))))
+Tokens: [OP:-] [LPAREN:(] [NUM:3] [OP:+] [LPAREN:(] [NUM:2] [OP:*] [OP:-] [NUM:4] [RPAREN:)] [RPAREN:)] [END]
+Result: 5
+
+Input: --(2 + 3)
+Tree: (neg (neg (+ 2 3)))
+Tokens: [OP:-] [OP:-] [LPAREN:(] [NUM:2] [OP:+] [NUM:3] [RPAREN:)] [END]
+Result: 5
+
+Input: -(--5)
+Tree: (neg (neg (neg 5)))
+Tokens: [OP:-] [LPAREN:(] [OP:-] [OP:-] [NUM:5] [RPAREN:)] [END]
+Result: -5
+
+Input: 3 ++ 5
+Tree: ERROR
+Tokens: [NUM:3] [OP:+] [OP:+] [NUM:5] [END]
+Result: ERROR
+
+Input: (2 + 3
+Tree: ERROR
+Tokens: [LPAREN:(] [NUM:2] [OP:+] [NUM:3] [END]
+Result: ERROR
+
+Input: 2 + )
+Tree: ERROR
+Tokens: [NUM:2] [OP:+] [RPAREN:)] [END]
+Result: ERROR
+
+Input: abc
+Tree: ERROR
+Tokens: ERROR
+Result: ERROR
+
+Input: ()
+Tree: ERROR
+Tokens: [LPAREN:(] [RPAREN:)] [END]
+Result: ERROR
+
+Input: 10 / 2
+Tree: (/ 10 2)
+Tokens: [NUM:10] [OP:/] [NUM:2] [END]
+Result: 5
+
+Input: 10 / 3
+Tree: (/ 10 3)
+Tokens: [NUM:10] [OP:/] [NUM:3] [END]
+Result: 3.3333
+
+Input: 0 / 5
+Tree: (/ 0 5)
+Tokens: [NUM:0] [OP:/] [NUM:5] [END]
+Result: 0
+
+Input: 5 / 0
+Tree: (/ 5 0)
+Tokens: [NUM:5] [OP:/] [NUM:0] [END]
+Result: ERROR
+
+Input: (10 - 10) / 2
+Tree: (/ (- 10 10) 2)
+Tokens: [LPAREN:(] [NUM:10] [OP:-] [NUM:10] [RPAREN:)] [OP:/] [NUM:2] [END]
+Result: 0
+
+Input: (2 + 3 * (4 + 5)) / 3
+Tree: (/ (+ 2 (* 3 (+ 4 5))) 3)
+Tokens: [LPAREN:(] [NUM:2] [OP:+] [NUM:3] [OP:*] [LPAREN:(] [NUM:4] [OP:+] [NUM:5] [RPAREN:)] [RPAREN:)] [OP:/] [NUM:3] [END]
+Result: 9.6667
+
+Input: -(2 + 3 * (4 + 5)) / 3
+Tree: (/ (neg (+ 2 (* 3 (+ 4 5)))) 3)
+Tokens: [OP:-] [LPAREN:(] [NUM:2] [OP:+] [NUM:3] [OP:*] [LPAREN:(] [NUM:4] [OP:+] [NUM:5] [RPAREN:)] [RPAREN:)] [OP:/] [NUM:3] [END]
+Result: -9.6667
+
+Input: (2 + 3)(4 + 5) / (1 + 1)
+Tree: (/ (* (+ 2 3) (+ 4 5)) (+ 1 1))
+Tokens: [LPAREN:(] [NUM:2] [OP:+] [NUM:3] [RPAREN:)] [LPAREN:(] [NUM:4] [OP:+] [NUM:5] [RPAREN:)] [OP:/] [LPAREN:(] [NUM:1] [OP:+] [NUM:1] [RPAREN:)] [END]
+Result: 22.5
+
+Input: ((2+3)*(4+5))/(1+1)
+Tree: (/ (* (+ 2 3) (+ 4 5)) (+ 1 1))
+Tokens: [LPAREN:(] [LPAREN:(] [NUM:2] [OP:+] [NUM:3] [RPAREN:)] [OP:*] [LPAREN:(] [NUM:4] [OP:+] [NUM:5] [RPAREN:)] [RPAREN:)] [OP:/] [LPAREN:(] [NUM:1] [OP:+] [NUM:1] [RPAREN:)] [END]
+Result: 22.5
