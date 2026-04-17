@@ -20,11 +20,11 @@ This assignment contains two main tasks:
 
 ## Repository Contents
 
-- `assignment2.zip` – All files for this assignment  
+- `assignment2 code files` – All files for this assignment  
 - `raw_text.txt` – Sample input for the encryption/decryption program  
-- `sample_input.txt` – Sample input for the expression evaluator  
+- `input.txt` – Sample input for the expression evaluator  
 - `output.txt` – Generated output from evaluating expressions  
-- `q2_evaluator.py` – Expression evaluator program  
+- `evaluator.py` – Expression evaluator program  
 - `README.md` – This file  
  
 
