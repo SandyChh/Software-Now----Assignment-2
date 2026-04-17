@@ -244,10 +244,6 @@ def evaluate_file(input_path: str) -> list[dict]:
     # and returns a list of dictionaries with keys: input, tree, tokens, result.
     results: list[dict] = []       # store return results
     output_lines: list[str] = []   # store file output
-# def evaluate_file(input_path: str):
-
-#     results = []  # store return results
-#     output_lines = []  # store file output
 
     # read input file
     with open(input_path, "r") as file:
@@ -321,14 +317,14 @@ def evaluate_file(input_path: str) -> list[dict]:
     with open("output.txt", "w") as file:
         file.write("\n".join(output_lines))
     
-    print(" SUCCESS: Output written to output.txt successfully!")
-
     return results
 
 
 def main():
     try:
         evaluate_file("input.txt")
+        print(" SUCCESS: Output written to output.txt successfully!")
+
     except Exception as e:
         print(f'Error occurred: {e}')
 
