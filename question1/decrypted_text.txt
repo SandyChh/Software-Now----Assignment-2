@@ -1,6 +1,32 @@
-The quick brown fox jumps over the lazy dog beneath the shady willows. The dog, startled from his peaceful afternoon nap, quickly rises and
-chases after the mischievous fox.
+Info 1) 
+Assessment 2 focuses on implementing two core programs: a text encryption and decryption system, and a mathematical expression evaluator.
 
-<<<Through vibrant meadows and past buzzing beehives they race, disturbing a flock of quails that scatter into the crisp autumn sky.>>> The
-fox, quite pleased with his clever prank, dashes into his cozy underground den while the dog, now exhausted from the zealous pursuit, returns
-to his favorite spot under the whispering branches to resume his quiet slumber.
+Info 2) 
+The encryption program reads an input text file, applies a custom character shifting algorithm, and generates an encrypted version of the content. It then decrypts the encrypted text to verify correctness.
+
+Info 3)
+The expression evaluator processes arithmetic expressions using recursive descent parsing. It supports addition, subtraction, multiplication, division, parentheses, unary operators, and implicit multiplication. The evaluator also handles invalid expressions gracefully and produces structured output including tokens, parse tree, and final result.
+
+Info 5)
+This assignment tests understanding of file handling, parsing techniques, error handling, and algorithm design in Python.
+
+==================
+lowercase (a to z)
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+
+==================
+UPPERCASE (A TO Z)
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+
+===========================
+Random mixed-character Text
+
+Encryption decryption
+shift1, shift2
+Numbers: 0 1 2 3 4 5 6 7 8 9
+Symbols: ! @ # $ % ^ & * ( ) - _ + = { } [ ] | \ : ; " ' < > , . ? /
+MixedCase TEXT with RANDOM words like Python, JAVA, and cOdInG.
+Edge cases: 0.1 + 0.2, 5 / 0, (2+3)*4, --5, 3 @ 5
+
+========================
+End of RAW input file.
