@@ -1,3 +1,5 @@
+from pathlib import Path
+
 # ---------------- TOKENIZER ---------------- #
 
 # Function to convert input string into a list of tokens (NUM, OP, LPAREN, RPAREN, END)
@@ -246,7 +248,7 @@ def evaluate_file(input_path: str) -> list[dict]:
     output_lines: list[str] = []   # store file output
 
     # read input file
-    with open(input_path, "r") as file:
+    with open(Path(__file__).parent / input_path, "r") as file:
         lines = file.readlines()
 
     # process each expression line
@@ -314,7 +316,7 @@ def evaluate_file(input_path: str) -> list[dict]:
         output_lines.append("")
 
     # write output file
-    with open("output.txt", "w") as file:
+    with open(Path(__file__).parent / "output.txt", "w") as file:
         file.write("\n".join(output_lines))
     
     print("====================================================")

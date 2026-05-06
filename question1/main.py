@@ -1,5 +1,7 @@
+from pathlib import Path
+
 def get_file_data(path):    # Reads the content of a file and returns it as a string
-    f = open(path)
+    f = open(Path(__file__).parent / path)
     data = f.read()
     f.close()
     return data
@@ -32,7 +34,7 @@ def encrypt(ip, op, shift1, shift2):
     cipher = {**a_m_cipher, **n_z_cipher, **A_M_cipher, **N_Z_cipher}
 
     encrypted_data = transform(data, cipher)
-    with open(op, 'w') as file:
+    with open(Path(__file__).parent / op, 'w') as file:
         file.write(encrypted_data)
 
     return cipher   # Returning the cipher used for decryption purposed later on
@@ -44,7 +46,7 @@ def decrypt(ip, op, cipher):
     # Reversing the cipher to restore original character mappings
     rev_cipher = {v: k for k, v in cipher.items()}
     decrypted_data = transform(data, rev_cipher)
-    with open(op, 'w') as file:
+    with open(Path(__file__).parent / op, 'w') as file:
         file.write(decrypted_data)
 
 
